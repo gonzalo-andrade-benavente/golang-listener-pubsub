@@ -21,15 +21,21 @@ func (h *MessageEventHandler) HandleEvent(event *domain.Event) error {
 		log.Printf("Error: %v", err)
 	}
 
-	log.Printf("transactionNumber: %s", transaction.Data.TransactionNumber)
+	//log.Printf("transactionNumber: %s", transaction.Data.TransactionNumber)
 
 	token, err := GetToken()
 
 	if err != nil {
-		log.Printf("Error: %v", err)
+		log.Printf("Error Token: %v", err)
 	}
 
-	log.Printf("Token: %s", token)
-	// add logic
+	data, err := GetTransaction(token, transaction)
+
+	if err != nil {
+		log.Printf("Error GET %v", err)
+	}
+
+	log.Printf("GET transaction %s -> %s", event.ID, data)
+
 	return nil
 }
